@@ -1,6 +1,6 @@
 import * as fs from 'fs'
 import { checkExists, fail, generateConfig, generateMigrationList } from './utils'
-import { MIGRATUM_FOLDER, CONFIG_FILE } from './defines'
+import { MIGRATUM_FOLDER, CONFIG_FILE, MIGRATIONS_FILE } from './defines'
 
 function initFolder() {
     try {
@@ -22,7 +22,7 @@ function initConfig() {
 function initMigrationList() {
     try {
         const config = generateMigrationList()
-        fs.writeFileSync(CONFIG_FILE, config)
+        fs.writeFileSync(MIGRATIONS_FILE, config)
     } catch (err) {
         fail(`cannot write config: ${err}`)
     }
@@ -43,7 +43,7 @@ export function init() {
     initFolder()
     initConfig()
     initMigrationList()
-    
+
     console.log(`Initialized new migrations in ${process.cwd()}`)
 }
 
