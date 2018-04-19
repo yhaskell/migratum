@@ -20,6 +20,7 @@ export function checkExistsDirectory(path: string) {
 export function fail(...args: any[]) {
     console.error(...args)
     process.exit(1)
+    throw new Error(...args);
 }
 
 export function generateMigrationList() {
