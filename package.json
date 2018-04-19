@@ -18,11 +18,13 @@
     "dev:down": "ts-node ./lib/index.ts down"
   },
   "devDependencies": {
+    "@types/chalk": "^2.2.0",
     "@types/node": "^9.6.5",
     "@types/yargs": "^11.0.0",
     "typescript": "^2.8.1"
   },
   "dependencies": {
+    "chalk": "^2.4.0",
     "yargs": "^11.0.0"
   }
 }

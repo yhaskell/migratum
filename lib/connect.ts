@@ -3,7 +3,7 @@ import { Connection, ConnectionInit } from "./connection"
 import { writeFileSync } from "fs";
 import { CONNECTION_FILE, MIGRATUM_FOLDER } from "./defines";
 
-function getProtocol(connString: string) {
+export function getProtocol(connString: string) {
     const protoColon = connString.indexOf('://')
     
 
@@ -15,7 +15,7 @@ function getProtocol(connString: string) {
     return connString.substr(0, protoColon)
 }
 
-function getDriver(moduleName: string): ConnectionInit {
+export function getDriver(moduleName: string): ConnectionInit {
     try {
         const { init } = require(moduleName)
         return init
@@ -25,7 +25,7 @@ function getDriver(moduleName: string): ConnectionInit {
     }
 }
 
-async function initConnection(moduleName: string, connString: string) {
+export async function initConnection(moduleName: string, connString: string) {
     const init = getDriver(moduleName)
     try {
         return await init(connString)
@@ -46,11 +46,15 @@ function saveConnectionString(connectionString: string) {
     }
 }
 
-export async function connect(connString: string) {
+export async function init(connString: string) {
     const protocol = getProtocol(connString)
     const moduleName = `migratum-${protocol}`
 
-    const connection = await initConnection(moduleName, connString)
+    return await initConnection(moduleName, connString)
+}
+
+export async function connect(connString: string) {
+    const connection = await init(connString)    
 
     try {
         const created = await connection.createMigrationTable()

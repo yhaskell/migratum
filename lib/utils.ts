@@ -1,4 +1,6 @@
 import * as fs from 'fs'
+import { MIGRATUM_FOLDER, CONNECTION_FILE, MIGRATIONS_FILE } from './defines';
+import { Migration } from './migration';
 export function checkExists(path: string) {
     try {
         fs.statSync(path)
@@ -29,4 +31,15 @@ export function generateMigrationList() {
     }
 
     return JSON.stringify(emptyList, null, 4)
+}
+
+export function getAvailableMigrations(): Migration[] {
+    const migrationsJSON = fs.readFileSync(MIGRATIONS_FILE, 'utf-8')
+    return JSON.parse(migrationsJSON).migrations
+}
+
+export function getConnectionString() {
+    const connStringJSON = fs.readFileSync(CONNECTION_FILE, 'utf-8')
+    const { connectionString } = JSON.parse(connStringJSON)
+    return connectionString
 }
