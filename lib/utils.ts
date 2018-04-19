@@ -34,3 +34,11 @@ export function generateConfig() {
     }
     return JSON.stringify(defaultConfig, undefined, 4)
 }
+
+export function generateMigrationList() {
+    const emptyList = {
+        migrations: []
+    }
+
+    return JSON.stringify(emptyList, null, 4)
+}
