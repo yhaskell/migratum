@@ -1,0 +1,23 @@
+{
+  "name": "migratum",
+  "version": "0.0.1",
+  "description": "Migratum -- opinionated SQL migration manager",
+  "main": "./lib/index.js",
+  "repository": "git@github.com:yhaskell/migratum.git",
+  "author": "Igor N. Dultsev <dultsev.igor@gmail.com>",
+  "license": "MIT",
+  "bin": {
+    "migratum": "./lib/index.js"
+  },
+  "scripts": {
+    "dev:init": "ts-node ./lib/index.ts init"
+  },
+  "devDependencies": {
+    "@types/node": "^9.6.5",
+    "@types/yargs": "^11.0.0",
+    "typescript": "^2.8.1"
+  },
+  "dependencies": {
+    "yargs": "^11.0.0"
+  }
+}
