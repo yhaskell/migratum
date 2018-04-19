@@ -10,7 +10,11 @@
     "migratum": "./lib/index.js"
   },
   "scripts": {
-    "dev:init": "ts-node ./lib/index.ts init"
+    "dev:init": "ts-node ./lib/index.ts init",
+    "dev:list": "ts-node ./lib/index.ts list",
+    "dev:create": "ts-node ./lib/index.ts create",
+    "dev:up": "ts-node ./lib/index.ts up",
+    "dev:down": "ts-node ./lib/index.ts down"
   },
   "devDependencies": {
     "@types/node": "^9.6.5",

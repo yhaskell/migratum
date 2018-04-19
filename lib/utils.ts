@@ -22,19 +22,6 @@ export function fail(...args: any[]) {
     process.exit(1)
 }
 
-export function generateConfig() {
-    const defaultConfig = {
-        type: "postgres",
-        connection: {
-            hostname: "localhost",
-            port: 5432,
-            user: "postgres",
-            password: ""
-        }
-    }
-    return JSON.stringify(defaultConfig, undefined, 4)
-}
-
 export function generateMigrationList() {
     const emptyList = {
         migrations: []
