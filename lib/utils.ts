@@ -26,11 +26,7 @@ export function fail(...args: any[]) {
 }
 
 export function generateMigrationList() {
-    const emptyList = {
-        migrations: []
-    }
-
-    return JSON.stringify(emptyList, null, 4)
+    return migrationsFile([])
 }
 
 export function getAvailableMigrations(): Migration[] {
@@ -38,8 +34,24 @@ export function getAvailableMigrations(): Migration[] {
     return JSON.parse(migrationsJSON).migrations
 }
 
+export function migrationsFile(migrations: Migration[]) {
+    const json = { migrations }
+
+    return JSON.stringify(json, null, 4)
+}
+
 export function getConnectionString() {
     const connStringJSON = fs.readFileSync(CONNECTION_FILE, 'utf-8')
     const { connectionString } = JSON.parse(connStringJSON)
     return connectionString
+}
+
+
+export function saveMigrations(migrations: Migration[]) {
+    try {
+        const config = migrationsFile(migrations)
+        fs.writeFileSync(MIGRATIONS_FILE, config)
+    } catch (err) {
+        fail(`cannot write migrations: ${err}`)
+    }
 }

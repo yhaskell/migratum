@@ -11,7 +11,7 @@ yargs
 .command('init', 'Initalize the migrations in a project', idFunc, init)
 .command('connect <url>', 'Connect migratum to a database', idFunc, ({url}: any) => connect(url))
 .command('list', 'List migrations and their status', idFunc, list)
-.command('create <name>', 'Create a new migration', idFunc, ({name}: any) => create(name))
+.command('create <name> [description]', 'Create a new migration', idFunc, ({name, description}: any) => create(name, description))
 .command('up [migration]', 'Migrate up to a given migration', idFunc, ({ migration }: any) => up(migration))
 .command('down <migration>', 'Migrate down to a given migration', idFunc, ({ migration }: any) => down(migration))
 .strict()
