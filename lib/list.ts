@@ -2,14 +2,9 @@ import { checkExistsDirectory, getConnectionString, getAvailableMigrations } fro
 import { MIGRATUM_FOLDER } from "./defines"
 import { init } from "./connect"
 import chalk from 'chalk'
+import { Connection } from "./connection";
 
-export async function list() {
-    if (!checkExistsDirectory(MIGRATUM_FOLDER)) {
-        throw new Error("Not a migratum project")
-    }
-    const connString = getConnectionString()
-    const connection = await init(connString)
-
+export async function getMigrationList(connection: Connection) {
     const available = getAvailableMigrations()
     const applied = await connection.migrationsList()
 
@@ -18,6 +13,18 @@ export async function list() {
 
     const toApply: { [key: string]: boolean } = available.reduce((p, m) => ({ ...p, [m.name]: true }), {})
     applied.forEach(u => toApply[u] = false)
+
+    return { available, applied, outOfOrder, toApply }
+}
+
+export async function list() {
+    if (!checkExistsDirectory(MIGRATUM_FOLDER)) {
+        throw new Error("Not a migratum project")
+    }
+    const connString = getConnectionString()
+    const connection = await init(connString)
+
+    const { available, applied, toApply, outOfOrder } = await getMigrationList(connection)
 
     let changed = false
     let warn = false

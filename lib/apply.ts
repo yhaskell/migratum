@@ -4,7 +4,7 @@ import { readFileSync } from "fs"
 import { MIGRATUM_FOLDER } from "./defines"
 import { Connection } from "./connection";
 
-function readMigration(name: string, direction: 'up' | 'down') {
+export function readMigration(name: string, direction: 'up' | 'down') {
     try {
         return readFileSync(`${MIGRATUM_FOLDER}/${name}/${direction}`, 'utf-8')
     } catch (err) {
@@ -13,11 +13,11 @@ function readMigration(name: string, direction: 'up' | 'down') {
     }
 }
 
-async function tryApplyMigration(connection: Connection, name: string, text: string) {
+export async function tryApplyMigration(connection: Connection, name: string, text: string, direction: 'up' | 'down') {
     try {
-        return await connection.applyMigration(name, text)
+        return await connection.applyMigration(name, text, direction)
     } catch (err) {
-        fail(`Couldn't apply migration ${name}: ${err.message}`)
+        fail(`Couldn't apply migration ${name}/${direction}: ${err.message}`)
     }
 }
 
@@ -37,7 +37,7 @@ export async function apply(migration: string, direction: string) {
 
     const text = readMigration(migration, direction)
 
-    await tryApplyMigration(connection, migration, text)
+    await tryApplyMigration(connection, migration, text, direction)
 
     process.exit(0)
 }
