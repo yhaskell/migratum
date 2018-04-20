@@ -40,7 +40,7 @@ export function migrationsFile(migrations: Migration[]) {
     return JSON.stringify(json, null, 4)
 }
 
-export function getConnectionString() {
+export function getConnectionString(): string {
     const connStringJSON = fs.readFileSync(CONNECTION_FILE, 'utf-8')
     const { connectionString } = JSON.parse(connStringJSON)
     return connectionString
